@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'rts.HelloOtus'
+        )
+    }
+}
+
+group = 'rts'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:33.5.0-jre'
+}
+
+test {
+    useJUnitPlatform()
+}
