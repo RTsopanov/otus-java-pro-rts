@@ -1,10 +1,11 @@
 package rts;
 
-
-import rts.handler.Handler;
+import static rts.handler.Handler.run;
 
 public class Main {
     public static void main(String[] args) {
-        new Handler().run("rts.myTest.TestOne");
+        run("rts.myTest.TestAllSuccess");
+        run("rts.myTest.TestBeforeThrowException");
+        run("rts.myTest.TestAfterThrowException");
     }
 }

@@ -4,28 +4,31 @@ import rts.anntotations.After;
 import rts.anntotations.Before;
 import rts.anntotations.Test;
 
-public class TestOne {
-
+public class TestAfterThrowException {
     @Before
     void setUp() {
-        System.out.println("START TEST");
+        System.out.println("\nSTART TEST");
     }
 
     @After
     void after() {
-        System.out.println("\nFINISH\n");
+        throw new RuntimeException();
     }
 
     @Test
     void testMethodFirst() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i <= 5; i++) {
             System.out.print(i + " ");
         }
+        System.out.println("\n----------------");
     }
 
     @Test
     void testMethodSecond() {
-        throw new IllegalArgumentException();
+        for (int i = -5; i < 0; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println("\n----------------");
     }
 
     @Test
@@ -33,5 +36,6 @@ public class TestOne {
         for (int i = 0; i < 50; i += 10) {
             System.out.print(i + " ");
         }
+        System.out.println("\n----------------");
     }
 }
