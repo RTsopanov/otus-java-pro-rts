@@ -6,65 +6,66 @@ import rts.anntotations.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Handler {
 
     public static void run(String className) {
-        Class cl = null;
+        Class<?> cl = null;
         try {
             cl = Class.forName(className);
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        Map<String, Integer> map = runTest(handlerBefore(cl), handlerTest(cl), handlerAfter(cl));
+        Map<String, Integer> map = runTest(handlerBefore(cl), handlerTest(cl), handlerAfter(cl), cl);
         map.forEach((k, v) -> System.out.println(k + v));
     }
 
-    private static Map<Method, Class> handlerBefore(Class cl) {
-        HashMap<Method, Class> beforeMap = new HashMap<>();
+    private static List<Method> handlerBefore(Class<?> cl) {
+        List<Method> beforeList = new ArrayList<>();
         Method[] methods = cl.getDeclaredMethods();
 
         for (Method m : methods) {
             if (m.isAnnotationPresent(Before.class)) {
-                beforeMap.put(m, cl);
+                beforeList.add(m);
             }
         }
 
-        return beforeMap;
+        return beforeList;
     }
 
-    private static Map<Method, Class> handlerAfter(Class cl) {
-        HashMap<Method, Class> aftereMap = new HashMap<>();
+    private static List<Method> handlerAfter(Class<?> cl) {
+        List<Method> aftereList = new ArrayList<>();
         Method[] methods = cl.getDeclaredMethods();
 
         for (Method m : methods) {
             if (m.isAnnotationPresent(After.class)) {
-                aftereMap.put(m, cl);
+                aftereList.add(m);
             }
         }
 
-        return aftereMap;
+        return aftereList;
     }
 
-    private static Map<Method, Class> handlerTest(Class cl) {
-        HashMap<Method, Class> testMap = new HashMap<>();
+    private static List<Method> handlerTest(Class<?> cl) {
+        List<Method> testList = new ArrayList<>();
         Method[] methods = cl.getDeclaredMethods();
 
         for (Method m : methods) {
             if (m.isAnnotationPresent(Test.class)) {
-                testMap.put(m, cl);
+                testList.add(m);
             }
         }
 
-        return testMap;
+        return testList;
     }
 
-    private static Map<String, Integer> runTest(Map<Method, Class> before, Map<Method, Class> test, Map<Method, Class> after) {
+    private static Map<String, Integer> runTest(List<Method> before, List<Method> test, List<Method> after, Class<?> cl) {
         Object classTest = null;
-        Method methodTest = null;
         int totalTestCount = test.size();
 
         Map<String, Integer> resultMap = new HashMap<>();
@@ -72,16 +73,13 @@ public class Handler {
         resultMap.put("Success tests: ", totalTestCount);
         resultMap.put("Error tests: ", 0);
 
-        for (Map.Entry<Method, Class> entryTest : test.entrySet()) {
+        for (Method methodTest : test) {
             boolean testFailed = false;
             try {
-                methodTest = entryTest.getKey();
-                classTest = entryTest.getValue().getDeclaredConstructor().newInstance();
-
-                for (Map.Entry<Method, Class> entryBefore : before.entrySet()) {
-                    entryBefore.getKey().setAccessible(true);
-                    entryBefore.getKey().invoke(classTest);
-
+                classTest = cl.getDeclaredConstructor().newInstance();
+                for (Method methodBefore : before) {
+                    methodBefore.setAccessible(true);
+                    methodBefore.invoke(classTest);
                 }
                 methodTest.setAccessible(true);
                 methodTest.invoke(classTest);
@@ -93,9 +91,9 @@ public class Handler {
 
             } finally {
                 try {
-                    for (Map.Entry<Method, Class> entryAfter : after.entrySet()) {
-                        entryAfter.getKey().setAccessible(true);
-                        entryAfter.getKey().invoke(classTest);
+                    for (Method methodAfter : after) {
+                        methodAfter.setAccessible(true);
+                        methodAfter.invoke(classTest);
                     }
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     if (!testFailed) {
