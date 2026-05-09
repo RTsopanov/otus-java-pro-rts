@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hw1-gradle.iml" filepath="$PROJECT_DIR$/hw1-gradle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw1-gradle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/hw1-gradle.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw1-gradle.test.iml" filepath="$PROJECT_DIR$/.idea/modules/hw1-gradle.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw2-generics-collections.iml" filepath="$PROJECT_DIR$/.idea/modules/hw2-generics-collections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw2-generics-collections.main.iml" filepath="$PROJECT_DIR$/.idea/modules/hw2-generics-collections.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw2-generics-collections.test.iml" filepath="$PROJECT_DIR$/.idea/modules/hw2-generics-collections.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hw3-reflection.iml" filepath="$PROJECT_DIR$/hw3-reflection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw3-reflection.main.iml" filepath="$PROJECT_DIR$/.idea/modules/hw3-reflection.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw3-reflection.test.iml" filepath="$PROJECT_DIR$/.idea/modules/hw3-reflection.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hw4-garbage-collector.iml" filepath="$PROJECT_DIR$/hw4-garbage-collector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/otus-java-pro-rts.iml" filepath="$PROJECT_DIR$/.idea/otus-java-pro-rts.iml" />
+    </modules>
+  </component>
+</project>
