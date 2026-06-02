@@ -1,6 +1,6 @@
 package rts.logger;
 
-import rts.annatations.Log;
+import rts.annotations.Log;
 
 public class Logging implements LoggingInterface {
 

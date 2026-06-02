@@ -1,7 +1,7 @@
 package rts.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import rts.annatations.Log;
+import rts.annotations.Log;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -17,14 +17,13 @@ public class TestHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        Log annotation = target.getClass().getMethod(method.getName(), method.getParameterTypes()).getDeclaredAnnotation(Log.class);
-        if (annotation == null) {
+        Method targetMethod = target.getClass().getMethod(method.getName(), method.getParameterTypes());
+        Log annotation = targetMethod.getDeclaredAnnotation(Log.class);
 
-            return method.invoke(target, args);
-        } else {
+        if (annotation != null) {
             log.info("executed method: {}, param: {}", method.getName(), Arrays.toString(args));
 
-            return method.invoke(target, args);
         }
+        return method.invoke(target, args);
     }
 }

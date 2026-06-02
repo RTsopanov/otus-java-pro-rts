@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group = 'rts'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
+    implementation("org.projectlombok:lombok:1.18.42")
+    annotationProcessor 'org.projectlombok:lombok:1.18.42'
+}
+
+test {
+    useJUnitPlatform()
+}
