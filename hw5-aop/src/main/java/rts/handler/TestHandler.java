@@ -17,8 +17,7 @@ public class TestHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        Method targetMethod = target.getClass().getMethod(method.getName(), method.getParameterTypes());
-        Log annotation = targetMethod.getDeclaredAnnotation(Log.class);
+        Log annotation = method.getDeclaredAnnotation(Log.class);
 
         if (annotation != null) {
             log.info("executed method: {}, param: {}", method.getName(), Arrays.toString(args));
