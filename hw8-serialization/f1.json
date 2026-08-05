@@ -1,0 +1,27 @@
+[
+  {
+    "id": "otp-001",
+    "status": "SUCCESS",
+    "errorMessage": null
+  },
+  {
+    "id": "otp-002",
+    "status": "PENDING",
+    "errorMessage": null
+  },
+  {
+    "id": "otp-003",
+    "status": "FAILED",
+    "errorMessage": null
+  },
+  {
+    "id": "otp-004",
+    "status": "PENDING",
+    "errorMessage": null
+  },
+  {
+    "id": "otp-005",
+    "status": "FAILED",
+    "errorMessage": null
+  }
+]
