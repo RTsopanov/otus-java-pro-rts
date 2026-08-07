@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+     id: "01.create_client"
+     author: "RTS"
+     changes:
+      - createTable:
+         schemaName: hw10
+         tableName: client
+         columns:
+          - column:
+             name: id
+             type: bigint
+             autoIncrement: true
+             constraints:
+              primaryKey: true
+          - column:
+              name: name
+              type: varchar(255)
+          - column:
+              name: address_id
+              type: bigint
