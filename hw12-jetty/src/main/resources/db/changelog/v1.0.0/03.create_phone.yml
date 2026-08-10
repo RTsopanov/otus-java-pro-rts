@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+     id: "03.create_phone"
+     author: "RTS"
+     changes:
+      - createTable:
+         schemaName: hw10
+         tableName: phone
+         columns:
+          - column:
+              name: id
+              type: bigint
+              autoIncrement: true
+              constraints:
+                primaryKey: true
+          - column:
+              name: number
+              type: varchar(255)
+          - column:
+              name: client_id
+              type: bigint
+
+  - changeSet:
+      id: "5-add-fk-phone-client"
+      author: RTS
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: hw10
+            baseTableName: phone
+            baseColumnNames: client_id
+            referencedTableSchemaName: hw10
+            referencedTableName: client
+            referencedColumnNames: id
+            constraintName: fk_phone_client

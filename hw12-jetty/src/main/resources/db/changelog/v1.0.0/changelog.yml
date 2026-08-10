@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: release/1.0.0
+      author: "RTS"
+      changes:
+        - tagDatabase:
+            tag: release/1.0.0
+  - include:
+      file: 01.create_client.yml
+      relativeToChangeLogFile: true
+  - include:
+      file: 02.create_address.yml
+      relativeToChangeLogFile: true
+  - include:
+      file: 03.create_phone.yml
+      relativeToChangeLogFile: true
