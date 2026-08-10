@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+     id: "02.create_address"
+     author: "RTS"
+     changes:
+      - createTable:
+         schemaName: hw10
+         tableName: address
+         columns:
+          - column:
+              name: id
+              type: bigint
+              autoIncrement: true
+              constraints:
+                primaryKey: true
+          - column:
+              name: street
+              type: varchar(255)
+
+  - changeSet:
+      id: "4-add-fk-client-address"
+      author: RTS
+      changes:
+        - addForeignKeyConstraint:
+            baseTableSchemaName: hw10
+            baseTableName: client
+            baseColumnNames: address_id
+            referencedTableSchemaName: hw10
+            referencedTableName: address
+            referencedColumnNames: id
+            constraintName: fk_client_address

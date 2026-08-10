@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5430/demoDB
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    hikari:
+      schema: hw10
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS ${spring.datasource.hikari.schema}
+  liquibase:
+    change-log: ./db/changelog/changelog-master.yml
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
