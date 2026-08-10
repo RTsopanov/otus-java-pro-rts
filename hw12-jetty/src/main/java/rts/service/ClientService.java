@@ -10,6 +10,9 @@ import rts.dto.ClientDto;
 import rts.model.Client;
 import rts.repository.ClientRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -39,6 +42,13 @@ public class ClientService {
         ClientDto dto = ClientDto.from(client);
         cache.put(id, dto);
         return dto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClientDto> findAll() {
+        return clientRepository.findAll().stream()
+                .map(ClientDto::from)
+                .collect(Collectors.toList());
     }
 
     public void delete(Long id) {
