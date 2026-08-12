@@ -1,12 +1,12 @@
 package rts.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rts.cachehw.HwCache;
 import rts.dto.ClientDto;
+import rts.exception.ClientNotFoundException;
 import rts.model.Client;
 import rts.repository.ClientRepository;
 
@@ -37,11 +37,22 @@ public class ClientService {
         }
         log.info("Client id={} идёт в БД", id);
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Client not found: id=" + id));
+                .orElseThrow(() -> new ClientNotFoundException("Client not found: id=" + id));
 
         ClientDto dto = ClientDto.from(client);
         cache.put(id, dto);
         return dto;
+    }
+
+    @Transactional(readOnly = true)
+    public Client findEntityById(Long id) {
+
+        return clientRepository.findById(id)
+                .orElseThrow(
+                        () -> new ClientNotFoundException(
+                                "Client not found: id=" + id
+                        )
+                );
     }
 
     @Transactional(readOnly = true)
