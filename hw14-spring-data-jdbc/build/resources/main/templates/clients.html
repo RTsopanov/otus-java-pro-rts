@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Клиенты</title>
+
+    <link rel="stylesheet"
+          href="/static/style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+    <h1>Клиенты</h1>
+
+    <section class="card">
+
+        <p>
+            <a href="/admin/clients/new">
+                Добавить клиента
+            </a>
+        </p>
+
+    </section>
+
+    <section class="card">
+
+        <table>
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Адрес</th>
+                <th>Телефоны</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="client : ${clients}">
+
+                <td th:text="${client.id}">
+                    1
+                </td>
+
+                <td th:text="${client.name}">
+                    Иван Иванов
+                </td>
+
+                <td th:text="${client.addressStreet}">
+                    Ленина 10
+                </td>
+
+                <td th:text="${#strings.listJoin(client.phoneNumbers, ', ')}">
+                    +79999999999
+                </td>
+
+                <td>
+
+                    <a th:href="@{/admin/clients/{id}(id=${client.id})}">
+                        Открыть
+                    </a>
+
+                    |
+
+                    <a th:href="@{/admin/clients/{id}/edit(id=${client.id})}">
+                        Изменить
+                    </a>
+
+                    |
+
+                    <form
+                            th:action="@{/admin/clients/{id}/delete(id=${client.id})}"
+                            method="post"
+                            style="display:inline">
+
+                        <button type="submit"
+                                onclick="return confirm('Удалить клиента?')">
+                            Удалить
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(clients)}">
+
+                <td colspan="5">
+                    Клиентов пока нет
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

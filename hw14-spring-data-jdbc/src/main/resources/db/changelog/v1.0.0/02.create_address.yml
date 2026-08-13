@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+     id: "02.create_address"
+     author: "RTS"
+     changes:
+      - createTable:
+         schemaName: hw10
+         tableName: address
+         columns:
+          - column:
+              name: id
+              type: bigint
+              autoIncrement: true
+              constraints:
+                primaryKey: true
+          - column:
+              name: street
+              type: varchar(255)
+          - column:
+              name: client
+              type: BIGINT

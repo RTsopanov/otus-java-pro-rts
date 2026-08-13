@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title th:text="${client.id == null
+        ? 'Добавление клиента'
+        : 'Редактирование клиента'}">
+        Клиент
+    </title>
+
+    <link rel="stylesheet"
+          href="/static/style.css">
+
+</head>
+
+<body>
+
+<main class="container">
+
+    <h1 th:if="${client.id == null}">
+        Добавление клиента
+    </h1>
+
+    <h1 th:unless="${client.id == null}">
+        Редактирование клиента
+    </h1>
+
+
+    <!-- CREATE -->
+
+    <form
+            th:if="${client.id == null}"
+            method="post"
+            action="/admin/clients">
+
+        <section class="card">
+
+            <p>
+                <label>
+                    Имя:
+                    <br>
+
+                    <input
+                            type="text"
+                            name="name"
+                            required>
+                </label>
+            </p>
+
+            <p>
+                <label>
+                    Улица:
+                    <br>
+
+                    <input
+                            type="text"
+                            name="street">
+                </label>
+            </p>
+
+            <p>
+                <label>
+                    Телефон:
+                    <br>
+
+                    <input
+                            type="text"
+                            name="phone">
+                </label>
+            </p>
+
+            <button type="submit">
+                Создать
+            </button>
+
+        </section>
+
+    </form>
+
+
+    <!-- UPDATE -->
+
+    <form
+            th:unless="${client.id == null}"
+            method="post"
+            th:action="@{/admin/clients/{id}/edit(id=${client.id})}">
+
+        <section class="card">
+
+            <p>
+                <label>
+                    Имя:
+                    <br>
+
+                    <input
+                            type="text"
+                            name="name"
+                            th:value="${client.name}"
+                            required>
+                </label>
+            </p>
+
+            <p>
+                <label>
+                    Улица:
+                    <br>
+
+                    <input
+                            type="text"
+                            name="street"
+                            th:value="${client.address.street}">
+                </label>
+            </p>
+
+            <p>
+                <label>
+                    Телефон:
+                    <br>
+
+                    <input
+                            type="text"
+                            name="phone"
+                            th:value="${client.phones[0].number}">
+                </label>
+            </p>
+
+            <button type="submit">
+                Сохранить
+            </button>
+
+        </section>
+
+    </form>
+
+    <p>
+        <a href="/admin/clients">
+            ← Назад к списку
+        </a>
+    </p>
+
+</main>
+
+</body>
+
+</html>
