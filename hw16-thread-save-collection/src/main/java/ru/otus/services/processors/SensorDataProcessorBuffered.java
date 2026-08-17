@@ -54,9 +54,13 @@ public class SensorDataProcessorBuffered implements SensorDataProcessor {
             }
 
             bufferedData.sort(Comparator.comparing(SensorData::getMeasurementTime));
-            writer.writeBufferedData(bufferedData);
-        } catch (Exception e) {
-            log.error("Ошибка в процессе записи буфера", e);
+            try {
+                writer.writeBufferedData(bufferedData);
+            } catch (Exception e) {
+                log.error("Ошибка в процессе записи буфера, данные возвращены в очередь", e);
+                returnToBuffer(bufferedData);
+
+            }
         } finally {
             flushInProgress.set(false);
         }
@@ -70,6 +74,11 @@ public class SensorDataProcessorBuffered implements SensorDataProcessor {
             result.add(item);
         }
         return result;
+    }
+
+    private void returnToBuffer(List<SensorData> bufferedData) {
+        dataBuffer.addAll(bufferedData);
+        bufferedCount.addAndGet(bufferedData.size());
     }
 
     @Override
