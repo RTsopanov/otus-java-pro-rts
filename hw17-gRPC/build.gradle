@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'com.google.protobuf' version '0.9.5'
 }
 
 group = 'rts'
@@ -9,9 +11,59 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    grpcVersion = '1.83.1'
+    protobufVersion = '3.25.8'
+    lombokVersion = '1.18.34'
+    logbackVersion = '1.5.13'
+}
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // логирование — тоже нужна явная версия
+    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+
+    implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+application {
+    mainClass = project.findProperty('mainClass') ?: 'rts.service.server.NumbersServer'
+}
+
+tasks.register('runServer', JavaExec) {
+    group = 'application'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'rts.service.server.NumbersServer'
+    standardInput = System.in
+}
+
+tasks.register('runClient', JavaExec) {
+    group = 'application'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'rts.service.client.NumbersClient'
+    standardInput = System.in
 }
 
 test {
